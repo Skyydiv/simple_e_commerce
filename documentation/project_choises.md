@@ -26,3 +26,66 @@
 
 ### Backend
 - java Spring
+
+
+## Package structure
+
+| Package | Contains | Example |
+|---|---|---|
+| `config` | Classes that configure Spring behavior | Database config, CORS settings, Security config |
+| `controller` | Classes that receive HTTP requests and return responses | `ProductController`, `UserController` |
+| `service` | Classes that contain business logic | Stock check before order, price calculation |
+| `repository` | Interfaces that talk to the database | `findByEmail()`, `findByCategory()` |
+| `entity` | Classes that map to database tables | `User`, `Product`, `Order` |
+| `dto` | Objects that carry data between layers — never expose raw entities | `UserRegisterRequest`, `ProductResponse` |
+| `security` | JWT logic, auth filters, password handling | `JwtUtil`, `JwtAuthFilter` |
+| `util` | Small reusable helpers | Date formatter, price calculator |
+
+[//]: # (| `exception` | Custom exceptions and the global error handler | `ResourceNotFoundException`, `GlobalExceptionHandler` |)
+
+### In term of layers
+- `presentation` : controller + dto
+- `business` : service 
+- `data` : repository + entity
+- `other` : config, security, util
+
+### Idea of a information flow
+```Markdown
+HTTP Request
+│
+▼
+┌─────────────────────────────────────────────┐
+│  PRESENTATION   ProductController           │
+│                 - receives GET /products/1  │
+│                 - calls productService      │
+└──────────────────────┬──────────────────────┘
+│ calls getProductById(1)
+▼
+┌─────────────────────────────────────────────┐
+│  BUSINESS       ProductService              │
+│                 - checks product is active  │
+│                 - converts entity → DTO     │
+│                 - calls productRepository   │
+└──────────────────────┬──────────────────────┘
+│ calls findById(1)
+▼
+┌─────────────────────────────────────────────┐
+│  DATA           ProductRepository           │
+│                 - generates SQL query       │
+│                 - returns Product entity    │
+└──────────────────────┬──────────────────────┘
+│ SELECT * FROM products WHERE id=1
+▼
+┌─────────────────────────────────────────────┐
+│  DATABASE       PostgreSQL                  │
+│                 - returns raw data          │
+└──────────────────────┬──────────────────────┘
+│ Product entity
+▼
+ProductService
+converts to ProductResponse DTO
+│
+▼
+ProductController
+returns HTTP 200 + JSON body
+```
