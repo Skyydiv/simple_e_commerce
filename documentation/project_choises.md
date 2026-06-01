@@ -44,9 +44,9 @@
 [//]: # (| `exception` | Custom exceptions and the global error handler | `ResourceNotFoundException`, `GlobalExceptionHandler` |)
 
 ### In term of layers
-- `presentation` : controller + dto
+- `presentation` : controller 
 - `business` : service 
-- `data` : repository + entity
+- `data` : repository + entity, dto
 - `other` : config, security, util
 
 ### Idea of a information flow

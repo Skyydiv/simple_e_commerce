@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS "Users";
+
+DROP TYPE IF EXISTS role;
+
+CREATE TYPE ROLE AS ENUM ('admin', 'user');
+
+
+CREATE TABLE "Users"(
+    user_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email VARCHAR(254) UNIQUE NOT NULL,
+    phone VARCHAR(20),
+    address VARCHAR(255),
+    role ROLE NOT NULL DEFAULT 'user'
+);
