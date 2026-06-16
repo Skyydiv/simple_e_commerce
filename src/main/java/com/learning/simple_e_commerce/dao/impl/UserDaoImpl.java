@@ -1,6 +1,6 @@
-package com.learning.simple_e_commerce.dto.impl;
+package com.learning.simple_e_commerce.dao.impl;
 
-import com.learning.simple_e_commerce.dto.UserDao;
+import com.learning.simple_e_commerce.dao.UserDao;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class UserDaoImpl implements UserDao {

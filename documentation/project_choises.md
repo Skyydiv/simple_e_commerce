@@ -30,21 +30,21 @@
 
 ## Package structure
 
-| Package | Contains | Example |
-|---|---|---|
-| `config` | Classes that configure Spring behavior | Database config, CORS settings, Security config |
-| `controller` | Classes that receive HTTP requests and return responses | `ProductController`, `UserController` |
-| `service` | Classes that contain business logic | Stock check before order, price calculation |
-| `repository` | Interfaces that talk to the database | `findByEmail()`, `findByCategory()` |
-| `entity` | Classes that map to database tables | `User`, `Product`, `Order` |
-| `dto` | Objects that carry data between layers — never expose raw entities | `UserRegisterRequest`, `ProductResponse` |
-| `security` | JWT logic, auth filters, password handling | `JwtUtil`, `JwtAuthFilter` |
-| `util` | Small reusable helpers | Date formatter, price calculator |
+| Package      | Contains | Example                                        |
+|--------------|---|------------------------------------------------|
+| `config`     | Classes that configure Spring behavior | Database config, CORS settings, Security config |
+| `controller` | Classes that receive HTTP requests and return responses | `ProductController`, `UserController`          |
+| `service`    | Classes that contain business logic | Stock check before order, price calculation    |
+| `repository` | Interfaces that talk to the database | `findByEmail()`, `findByCategory()`            |
+| `entity`     | Classes that map to database tables | `User`, `Product`, `Order`                     |
+| `dao`        | Interface that encapsulate the acces to the data and manage CRUD operations | `UserDAO`, `UserDaoImpl`                       |
+| `security`   | JWT logic, auth filters, password handling | `JwtUtil`, `JwtAuthFilter`                     |
+| `util`       | Small reusable helpers | Date formatter, price calculator               |
 
 [//]: # (| `exception` | Custom exceptions and the global error handler | `ResourceNotFoundException`, `GlobalExceptionHandler` |)
 
 ### In term of layers
-- `presentation` : controller 
+- `presentation` : controller (peu-être pas considérer comme présentation mais plus lien entre présentation et business)
 - `business` : service 
 - `data` : repository + entity, dto
 - `other` : config, security, util
@@ -52,40 +52,32 @@
 ### Idea of a information flow
 ```Markdown
 HTTP Request
-│
-▼
+│       ^
+▼       | HTTP 200 + JSON body 
 ┌─────────────────────────────────────────────┐
 │  PRESENTATION   ProductController           │
 │                 - receives GET /products/1  │
 │                 - calls productService      │
 └──────────────────────┬──────────────────────┘
-│ calls getProductById(1)
-▼
+│ calls getProductById(1)                   ^
+▼                                           | ProductResponse DTO
 ┌─────────────────────────────────────────────┐
 │  BUSINESS       ProductService              │
 │                 - checks product is active  │
 │                 - converts entity → DTO     │
 │                 - calls productRepository   │
 └──────────────────────┬──────────────────────┘
-│ calls findById(1)
-▼
+│ calls findById(1)                         ^
+▼                                           | Product entity
 ┌─────────────────────────────────────────────┐
 │  DATA           ProductRepository           │
 │                 - generates SQL query       │
 │                 - returns Product entity    │
 └──────────────────────┬──────────────────────┘
-│ SELECT * FROM products WHERE id=1
-▼
+│ SELECT * FROM products WHERE id=1         ^
+▼                                           | raw data
 ┌─────────────────────────────────────────────┐
 │  DATABASE       PostgreSQL                  │
 │                 - returns raw data          │
 └──────────────────────┬──────────────────────┘
-│ Product entity
-▼
-ProductService
-converts to ProductResponse DTO
-│
-▼
-ProductController
-returns HTTP 200 + JSON body
 ```
