@@ -1,5 +1,6 @@
 package com.learning.simple_e_commerce.entity;
 
+import com.learning.simple_e_commerce.util.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,5 +15,5 @@ public class User {
     private String email;
     private String phone;
     private String address;
-    private String role;
+    private Role role;
 }
