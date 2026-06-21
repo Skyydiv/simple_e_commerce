@@ -12,9 +12,13 @@ Testing library to create mock objects (fake versions of classes/dependencies) t
 ### Main Concepts to Remember:
 - Mock → fake dependency
 - when(...).thenReturn(...) → define behavior
-- verify(...) → check interactions
+- verify(...) → check a certain method was called on a mocked object with the correct arguments
 - @Mock → create mock automatically
-- @InjectMocks → inject mocks into tested class
+- @InjectMocks → inject mocks into tested class -> created at each test
 - Matchers (any(), anyLong(), etc.) → flexible arguments
 
 
+## Lombok 
+Generate boilerplate code like getters, setters, constructors...
+@AllArgsConstructor : create a constructor with all fields passed as arguments.
+@Builer: Can use the builder pattern to create objects.
