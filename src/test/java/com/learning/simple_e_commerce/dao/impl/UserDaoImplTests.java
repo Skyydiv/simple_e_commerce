@@ -20,11 +20,8 @@ public class UserDaoImplTests {
     @InjectMocks
     private UserDaoImpl userDao;
 
-    @Test
-    //Test that the method create of the DAO is generating a correct SQL query from a User object to be inserted into the database
-    public void testCreateUserGenerateCorrectSql(){
-        //create a user to transform into sql query
-        User user = User.builder()
+    public User buildExempleUser(){
+        return User.builder()
                 .user_id(1L)
                 .first_name("John")
                 .last_name("Doe")
@@ -33,13 +30,20 @@ public class UserDaoImplTests {
                 .address("123 Main St")
                 .role(Role.USER)
                 .build();
+    }
+
+    @Test
+    //Test that the method create is generating a correct SQL query to insert a user into the database
+    public void testCreateUserGenerateCorrectSql(){
+        //create a user to transform into sql query
+        User user = buildExempleUser();
 
         //call the method under test
         userDao.create(user);
 
         //verify that the correct sql query was generated
-        String sqlQuerry = "INSERT INTO Users (user_id, first_name, last_name, email, phone, address, role) VALUES (?,?,?,?,?,?,?)";
-        verify(jdbcTemplate).update(sqlQuerry,
+        String sqlQuery = "INSERT INTO Users (user_id, first_name, last_name, email, phone, address, role) VALUES (?,?,?,?,?,?,?)";
+        verify(jdbcTemplate).update(sqlQuery,
                 1L,
                 "John",
                 "Doe",
