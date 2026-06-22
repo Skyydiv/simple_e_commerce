@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.ArgumentMatchers.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -51,6 +52,23 @@ public class UserDaoImplTests {
                 "1234567890",
                 "123 Main St",
                 Role.USER.toString()
+        );
+    }
+
+
+    @Test
+    public void testFindOneUserGenerateCorrectSql(){
+        User user = buildExempleUser();
+
+        // Method under test
+        userDao.findOne(user.getUser_id());
+
+        // Verify method is called
+        String sqlQuery= "SELECT * FROM users WHERE user_id = ? LIMIT 1";
+        verify(jdbcTemplate).queryForObject(
+                eq(sqlQuery),
+                any(User.UserRowMapper.class),
+                eq(user.getUser_id())
         );
     }
 }

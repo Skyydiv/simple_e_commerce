@@ -25,4 +25,14 @@ public class UserDaoImpl implements UserDao {
                 user.getRole().toString()
         );
     }
+
+    @Override
+    public User findOne(Long userId) {
+        String sqlQuery = "SELECT * FROM users WHERE user_id = ? LIMIT 1";
+        return jdbcTemplate.queryForObject(
+                sqlQuery,
+                new User.UserRowMapper(),
+                userId
+        );
+    }
 }
