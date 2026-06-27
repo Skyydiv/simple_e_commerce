@@ -7,5 +7,5 @@ import java.util.Optional;
 public interface UserDao {
     void create(User user);
 
-    Optional<User> findOne(Long userId);
+    Optional<User> find(Long userId);
 }

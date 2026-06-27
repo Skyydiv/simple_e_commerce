@@ -29,7 +29,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findOne(Long userId) {
+    public Optional<User> find(Long userId) {
         String sqlToSelect  = "user_id, first_name, last_name, email, phone, address, role";
         String sqlQuery= "SELECT ? FROM users WHERE user_id = ? LIMIT 1";
 

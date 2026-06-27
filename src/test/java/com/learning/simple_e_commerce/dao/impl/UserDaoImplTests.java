@@ -61,7 +61,7 @@ public class UserDaoImplTests {
         User user = buildExempleUser();
 
         // Method under test
-        userDao.findOne(user.getUser_id());
+        userDao.find(user.getUser_id());
 
         // Verify method is called
         String sqlToSelect  = "user_id, first_name, last_name, email, phone, address, role";
