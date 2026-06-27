@@ -1,6 +1,7 @@
-Here's a concise **JUnit 5 cheat sheet** for everyday testing.
 
-# Basic Structure
+
+## Junit 
+### Basic Structure
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -46,7 +47,7 @@ class UserServiceTest {
 
 ---
 
-# Useful Mockito + JUnit Annotations
+### Useful Mockito + JUnit Annotations
 
 ```java
 @Mock
@@ -64,3 +65,18 @@ and
 
 to initialize Mockito automatically.
 
+
+
+## SpringBoot integration test
+Integration test to see if all parts are working together.
+
+### @SpringBootTest
+- How multiple Spring components work together (services, repositories, controllers, configuration, etc.).
+- Starts the full Spring context.
+- Beans are injected with @Autowired.
+```java
+    @SpringBootTest
+    class UserServiceTest {
+        //...
+    }
+```
