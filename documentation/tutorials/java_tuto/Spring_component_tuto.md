@@ -12,6 +12,8 @@ It is the communication between the application layer and the persistence layer 
 - need do integration test -> h2 database configuration, default test passes -> database connected
 - need unit test -> package test doa, test each functionality
 
+- Methods return optionals rappers for null values -> more type safe
+
 - implementing :
   - create objects in database
   - read 1 object from database

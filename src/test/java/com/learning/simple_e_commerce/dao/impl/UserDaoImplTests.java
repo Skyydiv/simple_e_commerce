@@ -64,10 +64,12 @@ public class UserDaoImplTests {
         userDao.findOne(user.getUser_id());
 
         // Verify method is called
-        String sqlQuery= "SELECT * FROM users WHERE user_id = ? LIMIT 1";
+        String sqlToSelect  = "user_id, first_name, last_name, email, phone, address, role";
+        String sqlQuery= "SELECT ? FROM users WHERE user_id = ? LIMIT 1";
         verify(jdbcTemplate).queryForObject(
                 eq(sqlQuery),
                 any(User.UserRowMapper.class),
+                eq(sqlToSelect),
                 eq(user.getUser_id())
         );
     }
