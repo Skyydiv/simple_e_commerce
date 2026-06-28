@@ -31,9 +31,8 @@ public class UserDaoImplTests {
         userDao.create(user);
 
         //verify that the correct sql query was generated
-        String sqlQuery = "INSERT INTO Users (user_id, first_name, last_name, email, phone, address, role) VALUES (?,?,?,?,?,?,?)";
+        String sqlQuery = "INSERT INTO users (first_name, last_name, email, phone, address, role) VALUES (?, ?, ?, ?, ?, ?)";
         verify(jdbcTemplate).update(sqlQuery,
-                1L,
                 "John",
                 "Doe",
                 "mail@hotmail.com",

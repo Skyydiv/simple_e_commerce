@@ -4,6 +4,87 @@
 ### primary key
 - use auto increment for id or ```nextval(...)?```?
 
+## Simple queries
+
+```sql
+-- =========================
+-- SELECT (read data)
+-- =========================
+
+SELECT * FROM users;                         -- get all users
+SELECT first_name, last_name FROM users;     -- select specific columns
+
+SELECT * FROM users WHERE id = ?;            -- filter by id
+SELECT * FROM users WHERE email LIKE '%@gmail.com'; -- pattern search
+
+SELECT * FROM users ORDER BY created_at DESC; -- sort results
+SELECT * FROM users LIMIT 10;                -- limit results
+
+
+-- =========================
+-- INSERT (create data)
+-- =========================
+
+INSERT INTO users (first_name, last_name, email)
+VALUES (?, ?, ?);                            -- insert one row
+
+INSERT INTO users (first_name, last_name)
+VALUES ('John', 'Doe'), ('Jane', 'Smith');   -- insert multiple rows
+
+
+-- =========================
+-- UPDATE (modify data)
+-- =========================
+
+UPDATE users
+SET email = ?
+WHERE id = ?;                                -- update one column
+
+UPDATE users
+SET first_name = ?, last_name = ?
+WHERE id = ?;                                -- update multiple columns
+
+
+-- =========================
+-- DELETE (remove data)
+-- =========================
+
+DELETE FROM users
+WHERE id = ?;                                -- delete one row
+
+
+-- =========================
+-- JOIN (combine tables)
+-- =========================
+
+SELECT *
+FROM orders o
+JOIN users u ON o.user_id = u.id;            -- inner join example
+
+
+-- =========================
+-- AGGREGATION
+-- =========================
+
+SELECT COUNT(*) FROM users;                  -- count rows
+SELECT AVG(price) FROM products;             -- average value
+SELECT MIN(price), MAX(price) FROM products; -- min / max
+
+
+-- =========================
+-- GROUP BY / HAVING
+-- =========================
+
+SELECT role, COUNT(*)
+FROM users
+GROUP BY role;                               -- group rows
+
+SELECT role, COUNT(*)
+FROM users
+GROUP BY role
+HAVING COUNT(*) > 1;                         -- filter groups
+```
+
 
 
 
