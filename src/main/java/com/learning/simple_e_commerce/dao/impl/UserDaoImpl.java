@@ -47,7 +47,7 @@ public class UserDaoImpl implements UserDao {
         );
     }
 
-    public static User buildExempleUser(){
+    public static User buildExempleUser(Role role){
         return User.builder()
                 .user_id(1L)
                 .first_name("John")
@@ -55,7 +55,7 @@ public class UserDaoImpl implements UserDao {
                 .email("mail@hotmail.com")
                 .phone("1234567890")
                 .address("123 Main St")
-                .role(Role.USER)
+                .role(role)
                 .build();
     }
 

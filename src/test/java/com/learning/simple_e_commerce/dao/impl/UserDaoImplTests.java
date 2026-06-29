@@ -25,7 +25,7 @@ public class UserDaoImplTests {
     //Test that the method create is generating a correct SQL query to insert a user into the database
     public void testCreateUserGenerateCorrectSql(){
         //create a user to transform into sql query
-        User user = UserDaoImpl.buildExempleUser();
+        User user = UserDaoImpl.buildExempleUser(Role.USER);
 
         //call the method under test
         userDao.create(user);
@@ -45,7 +45,7 @@ public class UserDaoImplTests {
 
     @Test
     public void testFindOneUserGenerateCorrectSql(){
-        User user = UserDaoImpl.buildExempleUser();
+        User user = UserDaoImpl.buildExempleUser(Role.USER);
 
         // Method under test
         userDao.find(user.getUser_id());

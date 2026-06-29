@@ -2,6 +2,7 @@ package com.learning.simple_e_commerce.dao.impl;
 
 import com.learning.simple_e_commerce.dao.UserDao;
 import com.learning.simple_e_commerce.entity.User;
+import com.learning.simple_e_commerce.util.Role;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,7 +24,7 @@ public class UserDaoImplIntegrationTests {
 
     @Test
     public void testUserCreatedAndRetrieved(){
-        User user = UserDaoImpl.buildExempleUser();
+        User user = UserDaoImpl.buildExempleUser(Role.USER);
 
         userDao.create(user);
         Optional<User> userRetrieved = userDao.find(user.getUser_id());
